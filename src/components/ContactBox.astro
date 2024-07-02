@@ -1,0 +1,50 @@
+<div class="contact-box">
+  <span class="contact-box__icon icon-phone"></span>
+  <a href="tel:+78452599300" class="contact-box__phone">8 8452 599 300</a>
+  <a href="mailto:naturel.2024@mail.ru" class="contact-box__email"
+    >naturel.2024@mail.ru</a
+  >
+</div>
+
+<style is:global lang="scss">
+  .contact-box {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: start;
+    column-gap: 10px;
+    row-gap: 4px;
+
+    &__icon {
+      font-size: 24px;
+      color: $color-pink;
+    }
+
+    &__phone {
+      font-size: 24px;
+      font-family: $gotam-black;
+      transition: color $transition;
+      line-height: 0.8;
+
+      @include hover {
+        &:hover {
+          color: $color-pink;
+        }
+      }
+    }
+
+    &__email {
+      font-size: 16px;
+      color: $color-pink;
+      text-decoration: underline;
+      text-decoration-color: transparent;
+      transition: text-decoration-color $transition;
+      grid-column: 2/-1;
+      line-height: 1.4;
+      @include hover {
+        &:hover {
+          text-decoration-color: $color-pink;
+        }
+      }
+    }
+  }
+</style>

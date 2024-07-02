@@ -1,0 +1,63 @@
+---
+import Button from "./Button.astro";
+import ContactBox from "./ContactBox.astro";
+import Select from "./Select.astro";
+
+const cities: string[] = ["Саратов", "Энгельс", "Маркс"];
+---
+
+<header class="header">
+  <div class="header__container">
+    <div class="header__mobile">mobile</div>
+    <div class="header__desktop">
+      <div class="header__desktop-up">
+        <img src="/img/logo/color.svg" alt="" class="header__desktop-logo" />
+        <Select id="city" label="Ваш город" options={cities} />
+        <ContactBox />
+        <Button color="pink" variant="normal">Обратный звонок</Button>
+      </div>
+      <div class="header__desktop-down"></div>
+    </div>
+  </div>
+</header>
+
+<style is:global lang="scss">
+  .header {
+    @include section;
+
+    &__container {
+      grid-area: center;
+    }
+
+    &__mobile {
+      display: none;
+    }
+
+    &__desktop {
+      &-up {
+        &-logo {
+          height: 80px;
+          width: 120px;
+        }
+      }
+
+      &-donw {
+      }
+    }
+  }
+
+  @include laptop {
+    .header {
+      &__container {
+      }
+
+      &__mobile {
+        display: flex;
+      }
+
+      &__desktop {
+        display: none;
+      }
+    }
+  }
+</style>

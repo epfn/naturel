@@ -1,0 +1,168 @@
+---
+import type { HTMLAttributes } from "astro/types";
+
+interface Props extends HTMLAttributes<"select"> {
+  options: string[];
+  variant?: "regular" | "bold";
+  label: string;
+}
+
+const { label, id, variant = "regular", options, ...restProps } = Astro.props;
+---
+
+<div class:list={["select", `select--${variant}`]}>
+  <label for={id} class="select__label">{label}</label>
+  <select {...restProps} {id} class="select__element">
+    {options.map((value) => <option {value}>{value}</option>)}
+  </select>
+</div>
+
+<style is:global lang="scss">
+  .select {
+    &__element {
+    }
+
+    &__label {
+      font-size: 12px;
+      transition: color $transition;
+    }
+  }
+
+  .choices {
+    font-size: 14px;
+    margin: unset;
+    line-height: 1;
+  }
+
+  .choices__list--single {
+    font-size: 16px;
+    font-weight: 400;
+    padding: 6px 32px 4px 4px;
+  }
+
+  .choices__inner {
+    border: 1px solid gray;
+    background-color: white;
+    border-radius: 8px;
+    min-height: unset;
+    border: unset;
+    background-color: unset;
+  }
+
+  .choices[data-type*="select-one"] .choices__inner {
+    padding: 0px 5px;
+  }
+
+  .choices__list--dropdown .choices__item,
+  .choices__list[aria-expanded] .choices__item {
+    padding: 10px;
+  }
+
+  .choices[data-type*="select-one"]::after {
+    background-image: url('data:image/svg+xml,<svg width="10" height="7" viewBox="0 0 10 7" fill="none" xmlns="http://www.w3.org/2000/svg"><path fill-rule="evenodd" clip-rule="evenodd" d="M1.03154 1.19719C1.38301 0.845715 1.95286 0.845716 2.30433 1.19719L5.00126 3.89412L7.69821 1.19719C8.04968 0.845714 8.61953 0.845715 8.971 1.19719C9.32247 1.54866 9.32247 2.11851 8.971 2.46998L5.65928 5.78169C5.29587 6.1451 4.70666 6.1451 4.34325 5.78169L1.03154 2.46998C0.680066 2.11851 0.680066 1.54866 1.03154 1.19719Z" fill="%23DADADA"/></svg>');
+    background-repeat: no-repeat;
+    height: 16px;
+    width: 16px;
+    border: unset;
+    margin-top: -5px;
+  }
+
+  .choices[data-type*="select-one"].is-open::after {
+    margin-top: -8px;
+    transform: rotate(180deg);
+  }
+
+  .is-focused .choices__inner,
+  .is-open .choices__inner {
+    border-color: gray;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+  }
+
+  .is-flipped.is-open .choices__inner {
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+  }
+
+  .is-open .choices__list--dropdown,
+  .is-open .choices__list[aria-expanded] {
+    border-color: gray;
+    border-bottom-left-radius: 8px;
+    border-bottom-right-radius: 8px;
+    /* border-top-width: 0; */
+    border-radius: 8px;
+    margin-top: 8px;
+  }
+
+  .is-flipped .choices__list--dropdown,
+  .is-flipped .choices__list[aria-expanded] {
+    border-color: gray;
+    border-top-left-radius: 8px;
+    border-top-right-radius: 8px;
+    border-bottom-left-radius: 0px;
+    border-bottom-right-radius: 0px;
+    border-top-width: 1px;
+    /* border-bottom-width: 0; */
+    border-radius: 8px;
+  }
+
+  .choices__list--dropdown .choices__item--selectable.is-highlighted,
+  .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
+    background-color: gray;
+  }
+
+  @media (max-width: 992px) {
+    .choices {
+    }
+
+    .choices__list--single {
+      font-size: 14px;
+      padding: 6px 11px 4px 4px;
+    }
+
+    .choices__inner {
+      /* border: 1px solid $color-border-gray; */
+      /* background-color: white; */
+      /* border-radius: 8px; */
+    }
+    .choices[data-type*="select-one"] .choices__inner {
+      /* padding: 9px 13px; */
+    }
+
+    .choices__list--dropdown .choices__item,
+    .choices__list[aria-expanded] .choices__item {
+      /* padding: 11px 17px; */
+      font-size: 12px;
+    }
+
+    .choices[data-type*="select-one"]::after {
+      right: -3px;
+    }
+
+    .choices[data-type*="select-one"].is-open::after {
+    }
+    .is-focused .choices__inner,
+    .is-open .choices__inner {
+    }
+    .is-open .choices__list--dropdown,
+    .is-open .choices__list[aria-expanded] {
+    }
+    .choices__list--dropdown .choices__item--selectable.is-highlighted,
+    .choices__list[aria-expanded] .choices__item--selectable.is-highlighted {
+    }
+  }
+</style>
+
+<script>
+  import Choices from "choices.js";
+  const selects = document.querySelectorAll(".select__element");
+  if (selects.length) {
+    selects.forEach((select) => {
+      const choice = new Choices(select, {
+        searchEnabled: false,
+        itemSelectText: "",
+        allowHTML: false,
+      });
+    });
+  }
+</script>

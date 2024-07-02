@@ -1,0 +1,65 @@
+---
+interface Props {
+  href?: string;
+  color: "pink";
+  variant: "normal";
+  submit?: boolean;
+  close?: boolean;
+  icon?: "menu" | "cart";
+}
+
+const {
+  href = undefined,
+  close,
+  variant,
+  color,
+  icon,
+  submit = false,
+} = Astro.props;
+
+const classList = [
+  "button",
+  `button--${color}`,
+  `button--${variant}`,
+  { "button--close": close },
+];
+
+const Element = href ? "a" : submit ? "button" : "div";
+---
+
+<Element {href} type={submit ? "submit" : undefined} class:list={classList}>
+  <span>
+    <slot />
+  </span>
+  {icon && <span class:list={["button__icon", `icon-${icon}`]} />}
+</Element>
+
+<style is:global lang="scss">
+  .button {
+    display: flex;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all $transition;
+    transition-property: color, background-color;
+
+    &--normal {
+      padding: 12px 24px;
+      font-size: 16px;
+    }
+
+    &--pink {
+      outline: 1px solid $color-pink;
+      color: $color-pink;
+      outline-offset: -1px;
+
+      @include hover {
+        &:hover {
+          background-color: $color-pink;
+          color: white;
+        }
+      }
+    }
+  }
+</style>
