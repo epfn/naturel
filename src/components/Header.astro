@@ -13,8 +13,10 @@ const cities: string[] = ["Саратов", "Энгельс", "Маркс"];
       <div class="header__desktop-up">
         <img src="/img/logo/color.svg" alt="" class="header__desktop-logo" />
         <Select id="city" label="Ваш город" options={cities} />
-        <ContactBox />
-        <Button color="pink" variant="normal">Обратный звонок</Button>
+        <div class="header__desktop-contact">
+          <ContactBox />
+          <Button color="pink" variant="normal">Обратный звонок</Button>
+        </div>
       </div>
       <div class="header__desktop-down"></div>
     </div>
@@ -35,13 +37,20 @@ const cities: string[] = ["Саратов", "Энгельс", "Маркс"];
 
     &__desktop {
       &-up {
-        &-logo {
-          height: 80px;
-          width: 120px;
-        }
       }
 
-      &-donw {
+      &-logo {
+        height: 80px;
+        width: 120px;
+      }
+
+      &-contact {
+        display: flex;
+        gap: 30px;
+        align-items: start;
+      }
+
+      &-down {
       }
     }
   }
